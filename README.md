@@ -19,10 +19,6 @@ And an example of opml with just one item in it:
 <outline title="www.hs.fi/rss/?osastot=politiikka" text="www.hs.fi/rss/?osastot=politiikka" type="rss" xmlUrl="http://www.hs.fi/rss/?osastot=politiikka" />
 </body></opml>
 
-You can install Ruby by using RVM
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-\curl -sSL https://get.rvm.io | bash -s stable --ruby
-Close terminal and open a new one
 rvm use 2.2.1
 More documentation if needed:
 https://rvm.io/rvm/install
@@ -53,3 +49,7 @@ Feedjira can:
 Make request for the url
 Validate the feed
 Get the title and description
+
+
+## Resources
+http://gillesfabio.com/blog/2011/03/01/rvm-for-pythonistas-virtualenv-for-rubyists/
