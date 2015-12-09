@@ -35,13 +35,7 @@ titles and descriptions in ram until you write the opml.
 Or you can read the file line by line and add items to the opml as you go.
 =end
 
-def write_opml(entry, save_path="")
-    if entry.url.include? "rss"
-        type = "rss"
-    else
-        type = "atom"
-    end
-
+def write_opml(entry, type, save_path="")
     opml = "<?xml version='1.0' encoding='utf-8' ?>
     <opml version='1.1'>
     <head>
@@ -56,10 +50,20 @@ def write_opml(entry, save_path="")
     File.write(file_name, opml)
 end
 
+def get_feed_type(url)
+    if url.include? "rss"
+        return "rss"
+    else
+        return "atom"
+    end
+end
+
 def parse_url(url, save_path)
     feed = Feedjira::Feed.fetch_and_parse url
+    type = get_feed_type feed.url
+
     feed.entries.each do |entry|
-        write_opml entry, save_path
+        write_opml entry, type, save_path
     end
 end
 
