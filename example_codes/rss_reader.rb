@@ -1,9 +1,6 @@
 #!/usr/bin/ruby -w
 
 require 'feedjira'
-# url_hs = "http://www.hs.fi/rss/?osastot=kotimaa"
-# feed_hs = Feedjira::Feed.fetch_and_parse url_hs
-
 
 =begin
 RSS/Atom aggregator
@@ -43,7 +40,7 @@ def write_opml(entry, type, save_path="")
     <dateCreated>#{entry.published}</dateCreated>
     </head>
     <body>
-    <outline title=#{entry.title} text=#{entry.title} type=#{type} xmlUrl=#{entry.url} />
+    <outline title=\'#{entry.title}\' text=\'#{entry.title}\' type=\'#{type}\' xmlUrl=\'#{entry.url}' />
     </body></opml>"
 
     file_name = save_path + entry.title + ".opml"
@@ -78,6 +75,5 @@ end
 def main(fr_name, save_path="")
     read_file(fr_name, save_path)
 end
-
 
 main("dummy_urls.txt", "../opml/")
