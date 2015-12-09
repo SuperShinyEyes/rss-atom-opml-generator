@@ -60,7 +60,7 @@ def parse_url(url, save_path)
     type = get_feed_type feed.url
 
     feed.entries.each do |entry|
-        write_opml entry, type, save_path
+        write_opml(entry, type, save_path)
     end
 end
 
