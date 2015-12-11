@@ -53,9 +53,11 @@ class Feed
 
     def get_feed_type(url=@url)
         if url.include? "rss"
-            return "rss"
+            return "application/rss+xml"
+        elsif url.include? "atom"
+            return "application/atom+xml"
         else
-            return "atom"
+            return "Unknown"
         end
     end
 

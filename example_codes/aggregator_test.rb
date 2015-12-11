@@ -1,10 +1,16 @@
 require_relative "aggregator"
-# require "test/unit"
+require "minitest/autorun"
 
-class TestAggregator < Test::Unit:TestCase
+class TestAggregator < Minitest::Test
 
-    def test
-        assert_equal("rss", Feed.new("http://www.hs.fi/rss/?osastot=kotimaa").type)
+    def setup
+        @feed_hs = Feed.new("http://www.hs.fi/rss/?osastot=kotimaa")
+        @feed_miehikkala = Feed.new("http://www.miehikkala.fi/d5webmiehi/cgi/DREQUEST.PHP?page=rss/meetingitems&show=30")
+
+    end
+
+    def test_type
+        assert_equal("rss", @feed_hs.type)
     end
 
 end
