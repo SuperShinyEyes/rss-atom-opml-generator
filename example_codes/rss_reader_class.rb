@@ -39,9 +39,10 @@ end
 
 class Feed
 
-    def initialize(url)
+    def initialize(url, feed)
         @url = url
-        @feed, @type = parse_url
+        @feed = feed
+        @type = get_feed_type
         @entries = get_entries
         @time = Time.new
     end
@@ -52,12 +53,6 @@ class Feed
         else
             return "atom"
         end
-    end
-
-    def parse_url(url=@url)
-        feed = Feedjira::Feed.fetch_and_parse(url)
-        type = get_feed_type
-        return feed, type
     end
 
     def get_entries(feed=@feed, type=@type)
@@ -87,13 +82,23 @@ class Feed
 end
 
 
-
 def main(url_file_name, save_path="")
     urls = read_file(url_file_name)
+    error = 0
 
     urls.each do |url|
-        f=Feed.new(url)
-        f.write_opml save_path
+        begin
+            feed = Feedjira::Feed.fetch_and_parse(url)
+            if feed == nil
+                raise NoMethodError
+            end
+        rescue Feedjira::NoParserAvailable, NoMethodError => e
+            error += 1
+            puts "(#{error}) #{e} - Feedjira couldn't parse\n\t#{url}"
+        else
+            f=Feed.new(url, feed)
+            f.write_opml save_path
+        end
     end
 end
 
