@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -w
+
 
 require 'feedjira'
 
@@ -32,19 +32,23 @@ titles and descriptions in ram until you write the opml.
 Or you can read the file line by line and add items to the opml as you go.
 =end
 
-def read_file(file_name)
-    # Split a text file by lines without newline characters
-    return File.readlines(file_name).each {|l| l.chomp!}
-end
 
 class Feed
-
-    def initialize(url, feed)
+    attr_reader :url, :feed, :type, :entries
+    def initialize(url, feed=nil)
         @url = url
-        @feed = feed
+        @feed = get_feed(feed)
         @type = get_feed_type
         @entries = get_entries
         @time = Time.new
+    end
+
+    def get_feed(feed)
+        if feed != nil
+            return feed
+        else
+            return Feedjira::Feed.fetch_and_parse(@url)
+        end
     end
 
     def get_feed_type(url=@url)
@@ -80,26 +84,3 @@ class Feed
         puts @url, @feed, @type, @entries
     end
 end
-
-
-def main(url_file_name, save_path="")
-    urls = read_file(url_file_name)
-    error = 0
-
-    urls.each do |url|
-        begin
-            feed = Feedjira::Feed.fetch_and_parse(url)
-            if feed == nil
-                raise NoMethodError
-            end
-        rescue Feedjira::NoParserAvailable, NoMethodError => e
-            error += 1
-            puts "(#{error}) #{e} - Feedjira couldn't parse\n\t#{url}"
-        else
-            f=Feed.new(url, feed)
-            f.write_opml save_path
-        end
-    end
-end
-
-main("dummy_urls.txt", "../opml/")
