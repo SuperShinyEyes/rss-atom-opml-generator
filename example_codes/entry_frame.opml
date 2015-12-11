@@ -1,0 +1,2 @@
+
+<outline title=\"#{entry.title}\" text=\"#{entry.title}\" type=\"#{type}\" xmlUrl=\"#{entry.url}\"/>

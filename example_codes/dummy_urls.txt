@@ -1,1 +1,2 @@
 http://www.hs.fi/rss/?osastot=kotimaa
+http://www.miehikkala.fi/d5webmiehi/cgi/DREQUEST.PHP?page=rss/meetingitems&show=30

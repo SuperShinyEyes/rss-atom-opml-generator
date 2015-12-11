@@ -65,15 +65,17 @@ def parse_url(url, save_path)
 end
 
 
-def read_file(fr_name, save_path)
-    File.foreach(fr_name) do |url|
-        parse_url url, save_path
-    end
+def read_file(file_name)
+    # Split a text file by lines without newline characters
+    return File.readlines(file_name).each {|l| l.chomp!}
 end
 
 
-def main(fr_name, save_path="")
-    read_file(fr_name, save_path)
+def main(url_file_name, save_path="")
+    urls = read_file(url_file_name)
+    print urls
+    urls.each do |url|
+
 end
 
 main("dummy_urls.txt", "../opml/")
