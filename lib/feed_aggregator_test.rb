@@ -1,3 +1,7 @@
+# 2015 December 12th Saturday 03:38
+# Author: Seyoung Park
+# e-mail: king@seyoung.xyz
+
 require_relative "aggregator"
 require "minitest/autorun"
 
