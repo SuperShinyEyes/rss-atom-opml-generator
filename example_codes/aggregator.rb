@@ -39,7 +39,7 @@ class Feed
         @url = url
         @feed = get_feed(feed)
         @type = get_feed_type
-        @entries = get_entries
+        @entry_body = get_entries
         @time = Time.new
     end
 
@@ -52,9 +52,17 @@ class Feed
     end
 
     def get_feed_type(url=@url)
-        if url.include? "rss"
+        # According to Feedjira source code there are only two
+        # types of entries: AtomEntry and RSSEntry
+        # https://github.com/feedjira/feedjira/tree/master/lib/feedjira/parser
+
+        # Feedjira doesn't have a method returning feed type.
+        # Get it from the class name: #<Feedjira::Parser::RSSEntry:0x007fdc81ab5a80>
+        # ["#<Feedjira", "", "Parser", "", "RSSEntry", "0x007fdc81ab5a80>"]
+        this_type = String(@feed.entries[0]).split(":")[4]
+        if this_type == 'RSSEntry'
             return "application/rss+xml"
-        elsif url.include? "atom"
+        elsif this_type == 'AtomEntry'
             return "application/atom+xml"
         else
             return "Unknown"
@@ -77,9 +85,9 @@ class Feed
     end
 
     def write_opml(save_path="")
-        opml = get_opml_header + @entries + "\n</opml>"
+        content = get_opml_header + @entries + "\n</opml>"
         file_name = "#{save_path}#{@feed.description} - #{@time}.opml"
-        File.write(file_name, opml)
+        File.write(file_name, content)
     end
 
     def summary
