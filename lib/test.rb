@@ -2,7 +2,7 @@
 # Author: Seyoung Park
 # e-mail: king@seyoung.xyz
 
-require_relative "aggregator"
+require_relative "opml_generator"
 require "minitest/autorun"
 
 class TestAggregator < Minitest::Test
@@ -15,18 +15,9 @@ class TestAggregator < Minitest::Test
     end
 
     def test_type
-        # print @feed_type_unknown.url, String(@feed_type_unknown.feed.entries[0]).split(":")
         assert_equal("application/rss+xml", @feed_hs.type)
         assert_equal("application/rss+xml", @feed_miehikkala.type)
         assert_equal("application/atom+xml", @feed_type_unknown.type)
     end
-
-    # def test_feed
-    #     # assert_equal(Feedjira::Feed.fetch_and_parse("http://www.hs.fi/rss/?osastot=kotimaa").entries, @feed_hs.feed.entries)
-    # end
-
-    # def test_opml_header
-    #     assert_equal()
-    # end
 
 end
