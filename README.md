@@ -1,10 +1,10 @@
 # Introduction
-feed_aggregator is an opml generator using [Feedjira](http://feedjira.com/). It can collect RSS and Atom feeds. It supports url validation.
+rss-atom-opml-generator is an opml generator using [Feedjira](http://feedjira.com/). It collects RSS and Atom feeds and generates an opml. It supports url validation.
 
 # How to use
 Put the following code to your app.
 ```ruby
-require_relative "feed_aggregator"
+require_relative "opml_aggregator"
 
 aggregate("/path/to/file_of_urls", "path/to/opml")
 ```
